@@ -1,6 +1,7 @@
 <template>
   <v-chart :forceFit="true" :height="height" :data="data" :scale="scale" :onClick="handleClick">
-    <v-tooltip :showTitle="false" dataKey="item*percent"/>
+  <h4 :style="{ marginBottom: '20px' }">{{ title }}</h4>
+    <v-tooltip :showTitle="true" dataKey="item*percent"/>
     <v-axis/>
     <v-legend dataKey="item"/>
     <v-pie position="percent" color="item" :v-style="pieStyle" :label="labelConfig"/>
@@ -27,11 +28,10 @@
       dataSource: {
         type: Array,
         default: () => [
-          { item: '示例一', count: 40 },
-          { item: '示例二', count: 21 },
-          { item: '示例三', count: 17 },
-          { item: '示例四', count: 13 },
-          { item: '示例五', count: 9 }
+          { item: '迟到', count: 250 },
+          { item: '早退', count: 222 },
+          { item: '旷课', count: 155 },
+          { item: '未记录', count: 22 }
         ]
       }
     },

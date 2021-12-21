@@ -1,8 +1,9 @@
 <template>
   <div class="page-header-index-wide">
     <a-row :gutter="24">
+      
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="总销售额" total="￥126,560">
+        <chart-card :loading="loading" title="昨日晚自习出席人数" total="9,560">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
@@ -16,40 +17,44 @@
               11%
             </trend>
           </div>
-          <template slot="footer">日均销售额<span>￥ 234.56</span></template>
+          <template slot="footer">昨日晚自习出席率<span> 96% </span></template>
         </chart-card>
       </a-col>
+      
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="订单量" :total="8846 | NumberFormat">
+        <chart-card :loading="loading" title="今日学生出席率" total="97%">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
             <mini-area />
           </div>
-          <template slot="footer">日订单量<span> {{ '1234' | NumberFormat }}</span></template>
+          <template slot="footer">今日学生出席人数<span> {{ '9986' | NumberFormat }}</span></template>
         </chart-card>
       </a-col>
+      
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="支付笔数" :total="6560 | NumberFormat">
+        <chart-card :loading="loading" title="今日学生请假率" total="1%">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
             <mini-bar :height="40" />
           </div>
-          <template slot="footer">转化率 <span>60%</span></template>
+          <template slot="footer">今日学生请假人数 <span> 96 </span></template>
         </chart-card>
       </a-col>
+      
       <a-col :sm="24" :md="12" :xl="6" :style="{ marginBottom: '24px' }">
-        <chart-card :loading="loading" title="运营活动效果" total="78%">
+        <chart-card :loading="loading" title="当前学期学时进度" total="23%">
           <a-tooltip title="指标说明" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
-            <mini-progress color="rgb(19, 194, 194)" :target="80" :percentage="78" :height="8" />
+            <mini-progress color="rgb(19, 194, 194)" :target="50" :percentage="23" :height="8" />
           </div>
-          <template slot="footer">
+          <template slot="footer">今日完成学时 <span> 106 </span></template>
+          <!-- <template slot="footer">
             <trend flag="down" style="margin-right: 16px;">
               <span slot="term">同周比</span>
               12%
@@ -58,7 +63,7 @@
               <span slot="term">日环比</span>
               80%
             </trend>
-          </template>
+          </template> -->
         </chart-card>
       </a-col>
     </a-row>
@@ -66,7 +71,7 @@
     <a-card :loading="loading" :bordered="false" :body-style="{padding: '0'}">
       <div class="salesCard">
         <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
-          <div class="extra-wrapper" slot="tabBarExtraContent">
+          <!-- <div class="extra-wrapper" slot="tabBarExtraContent">
             <div class="extra-item">
               <a>今日</a>
               <a>本周</a>
@@ -74,24 +79,39 @@
               <a>本年</a>
             </div>
             <a-range-picker :style="{width: '256px'}" />
-          </div>
-          <a-tab-pane loading="true" tab="销售额" key="1">
+          </div> -->
+          <a-tab-pane loading="true" tab="工程技术系" key="1">
             <a-row>
-              <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar title="销售额排行" :dataSource="barData"/>
+              <a-col :xl="8" :lg="6" :md="6" :sm="12" :xs="12">
+                <bar title="出勤人数" :dataSource="barData"/>
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <rank-list title="门店销售排行榜" :list="rankList"/>
+                <pie title="缺勤原因占比" :height="height"/>
+              </a-col>
+              <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
+                <rank-list title="班级出勤率排行" :list="rankList"/>
               </a-col>
             </a-row>
           </a-tab-pane>
-          <a-tab-pane tab="销售趋势" key="2">
+          
+          <a-tab-pane tab="财经商贸系" key="2">
             <a-row>
               <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar title="销售额趋势" :dataSource="barData"/>
+                <bar title="出勤人数" :dataSource="barData"/>
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <rank-list title="门店销售排行榜" :list="rankList"/>
+                <rank-list title="班级出勤率排行" :list="rankList"/>
+              </a-col>
+            </a-row>
+          </a-tab-pane>
+          
+          <a-tab-pane tab="现代服务系" key="3">
+            <a-row>
+              <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
+                <bar title="出勤人数" :dataSource="barData"/>
+              </a-col>
+              <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
+                <rank-list title="班级出勤率排行" :list="rankList"/>
               </a-col>
             </a-row>
           </a-tab-pane>
@@ -146,6 +166,7 @@
   import Bar from '@/components/chart/Bar'
   import LineChartMultid from '@/components/chart/LineChartMultid'
   import HeadInfo from '@/components/tools/HeadInfo.vue'
+  import Pie from '@/components/chart/Pie'
 
   import Trend from '@/components/Trend'
   import { getLoginfo,getVisitInfo } from '@/api/api'
@@ -153,14 +174,14 @@
   const rankList = []
   for (let i = 0; i < 7; i++) {
     rankList.push({
-      name: '白鹭岛 ' + (i+1) + ' 号店',
+      name: '**专业 ' + (i+1) + ' 班',
       total: 1234.56 - i * 100
     })
   }
   const barData = []
-  for (let i = 0; i < 12; i += 1) {
+  for (let i = 0; i < 7; i += 1) {
     barData.push({
-      x: `${i + 1}月`,
+      x: `周${i + 1}`,
       y: Math.floor(Math.random() * 1000) + 200
     })
   }
@@ -177,7 +198,8 @@
       Bar,
       Trend,
       LineChartMultid,
-      HeadInfo
+      HeadInfo,
+      Pie
     },
     data() {
       return {

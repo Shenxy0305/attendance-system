@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="user-login-other">
+    <!-- <div class="user-login-other">
       <span>其他登录方式</span>
       <a @click="onThirdLogin('github')" title="github"><a-icon class="item-icon" type="github"></a-icon></a>
       <a @click="onThirdLogin('wechat_enterprise')" title="企业微信"> <icon-font class="item-icon" type="icon-qiyeweixin3" /></a>
       <a @click="onThirdLogin('dingtalk')" title="钉钉"><a-icon class="item-icon" type="dingding"></a-icon></a>
       <a @click="onThirdLogin('wechat_open')" title="微信"><a-icon class="item-icon" type="wechat"></a-icon></a>
-    </div>
+    </div> -->
     <!-- 第三方登录绑定账号密码输入弹框 -->
     <a-modal title="请输入密码" :visible="thirdPasswordShow" @ok="thirdLoginCheckPassword" @cancel="thirdLoginNoPassword">
       <a-input-password placeholder="请输入密码" v-model="thirdLoginPassword" />
