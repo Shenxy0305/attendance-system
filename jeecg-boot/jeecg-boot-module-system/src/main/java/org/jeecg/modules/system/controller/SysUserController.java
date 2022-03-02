@@ -19,6 +19,8 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.system.api.ISysBaseAPI;
+import org.jeecg.modules.attendance.entity.Student;
+import org.jeecg.modules.attendance.mapper.StudentMapper;
 import org.jeecg.modules.base.service.BaseCommonService;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.JwtUtil;
@@ -87,6 +89,9 @@ public class SysUserController {
 
 	@Autowired
 	private RedisUtil redisUtil;
+
+	@Autowired
+    private StudentMapper studentMapper;
 
     @Value("${jeecg.path.upload}")
     private String upLoadPath;
@@ -165,7 +170,7 @@ public class SysUserController {
 			baseCommonService.addLog("编辑用户，id： " +jsonObject.getString("id") ,CommonConstant.LOG_TYPE_2, 2);
 			if(sysUser==null) {
 				result.error500("未找到对应实体");
-			}else {
+			} else {
 				SysUser user = JSON.parseObject(jsonObject.toJSONString(), SysUser.class);
 				user.setUpdateTime(new Date());
 				//String passwordEncode = PasswordUtil.encrypt(user.getUsername(), user.getPassword(), sysUser.getSalt());
@@ -190,6 +195,12 @@ public class SysUserController {
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
 	public Result<?> delete(@RequestParam(name="id",required=true) String id) {
 		baseCommonService.addLog("删除用户，id： " +id ,CommonConstant.LOG_TYPE_2, 3);
+        // TODO
+        QueryWrapper<Student> studentQueryWrapper = new QueryWrapper<Student>();
+        studentQueryWrapper.eq("user_id", id);
+        if (studentMapper.selectCount(studentQueryWrapper) > 0) {
+            studentMapper.delete(studentQueryWrapper);
+        }
 		this.sysUserService.deleteUser(id);
 		return Result.ok("删除用户成功");
 	}

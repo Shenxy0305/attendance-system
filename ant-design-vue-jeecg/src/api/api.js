@@ -14,6 +14,21 @@ const editUser = (params) => putAction("/sys/user/edit", params);
 const queryUserRole = (params) => getAction("/sys/user/queryUserRole", params);
 const getUserList = (params) => getAction("/sys/user/list", params);
 const frozenBatch = (params) => putAction("/sys/user/frozenBatch", params);
+
+//学生管理
+const addStudent = (params) => postAction("/student/add", params);
+const getStudentList = (params) => getAction("/student/list", params);
+const editStudent = (params) => putAction("/student/edit", params);
+const deleteStudent = (params) => deleteAction("student/delete", params);
+
+//教师管理
+const addTeacher = (params) => postAction("/teacher/add", params);
+const getTeacherList = (params) => getAction("/teacher/list", params);
+const editTeacher = (params) => putAction("teacher/edit", params);
+const deleteTeacher = (params) => deleteAction("teacher/delete", params);
+
+
+
 //验证用户是否存在
 const checkOnlyUser = (params) => getAction("/sys/user/checkOnlyUser", params);
 //改变密码
@@ -157,5 +172,13 @@ export {
     saveDeptRolePermission,
     queryMyDepartTreeList,
     getUserNoticeInfo,
-    getDictItemsFromCache
+    getDictItemsFromCache,
+    addStudent,
+    getStudentList,
+    editStudent,
+    deleteStudent,
+    addTeacher,
+    getTeacherList,
+    editTeacher,
+    deleteTeacher
 }

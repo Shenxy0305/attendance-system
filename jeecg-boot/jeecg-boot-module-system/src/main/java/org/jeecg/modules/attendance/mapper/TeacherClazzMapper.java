@@ -1,0 +1,2 @@
+package org.jeecg.modules.attendance.mapper;public interface TeacherClazzMapper {
+}
