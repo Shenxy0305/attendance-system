@@ -1,5 +1,97 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="">
-    
+<mapper namespace="org.jeecg.modules.attendance.mapper.TeacherMapper">
+
+    <resultMap id="getTeacherDAO" type="org.jeecg.modules.attendance.DTO.TeacherDTO">
+        <result property="userId" column="user_id"/>
+        <result property="account" column="username"/>
+        <result property="name" column="realname"/>
+        <result property="sex" column="sex"/>
+        <result property="majorId" column="major_id"/>
+        <result property="majorName" column="major_name"/>
+        <result property="clazzId" column="clazz_id"/>
+        <result property="clazzName" column="clazz_name"/>
+        <result property="courseId" column="course_id"/>
+        <result property="courseName" column="course_name" />
+        <result property="phone" column="phone"/>
+    </resultMap>
+
+    <select id="getTeacherList" parameterType="org.jeecg.modules.attendance.DTO.TeacherDTO" resultMap="getTeacherDAO">
+        SELECT
+            u.realname,
+            u.phone,
+            u.username,
+            t.user_id,
+            (
+                SELECT
+                    GROUP_CONCAT( major_name )
+                FROM
+                    at_major m
+                    INNER JOIN at_clazz cl ON cl.major_id = m.major_id
+                    INNER JOIN at_teacher_clazz tcl ON cl.clazz_id = tcl.clazz_id
+                    INNER JOIN at_teacher t ON t.teacher_id = tcl.teacher_id
+                WHERE
+                    t.del_flag = 0
+                    AND m.del_flag = 0
+                    AND t.user_id = u.id
+            ) AS major_name,
+            (
+                SELECT
+                    GROUP_CONCAT( clazz_name )
+                FROM
+                    at_clazz cl
+                    INNER JOIN at_teacher_clazz tcl ON cl.clazz_id = tcl.clazz_id
+                    INNER JOIN at_teacher t ON t.teacher_id = tcl.teacher_id
+                WHERE
+                    t.del_flag = 0
+                    AND cl.del_flag = 0
+                    AND t.user_id = u.id
+            ) AS clazz_name,
+            (
+                SELECT
+                    GROUP_CONCAT( course_name )
+                FROM
+                    at_course co
+                    INNER JOIN at_teacher_course tco ON co.course_id = tco.course_id
+                    INNER JOIN at_teacher t ON t.teacher_id = tco.teacher_id
+                WHERE
+                    t.del_flag = 0
+                    AND co.del_flag = 0
+                    AND t.user_id = u.id
+            ) AS course_name
+        FROM
+            at_teacher t
+            INNER JOIN sys_user u ON t.user_id = u.id
+            INNER JOIN at_teacher_clazz tcl ON t.teacher_id = tcl.teacher_id
+            INNER JOIN at_clazz cl ON tcl.clazz_id = cl.clazz_id
+            INNER JOIN at_major m ON cl.major_id = m.major_id
+        WHERE
+            u.del_flag = 0
+            AND t.del_flag = 0
+            AND m.del_flag = 0
+            <if test="account != null and account != ''">
+                AND u.username LIKE CONCAT(#{account},'%')
+            </if>
+            <if test="name != null and name != ''">
+                AND u.realname LIKE CONCAT(#{name},'%')
+            </if>
+            <if test="sex != null and sex != ''">
+                AND u.sex = #{sex}
+            </if>
+            <if test="majorId != null and majorId != ''">
+                AND m.major_id = #{majorId}
+            </if>
+            <if test="phone != null and phone != ''">
+                AND u.phone LIKE CONCAT(#{phone},'%')
+            </if>
+            <if test="clazzId != null and clazzId != ''">
+                AND cl.clazz_id = #{clazzId}
+            </if>
+            <if test="courseId != null and courseId != ''">
+                AND co.course_id = #{courseId}
+            </if>
+        GROUP BY
+            user_id
+    </select>
+
 </mapper>

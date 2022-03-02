@@ -4,9 +4,6 @@ import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.Columns;
-import org.jeecg.common.aspect.annotation.Dict;
-import org.jeecgframework.poi.excel.annotation.Excel;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -30,32 +27,26 @@ public class Student implements Serializable {
     /**
      * id
      */
-    @TableId(value = "student_id", type = IdType.AUTO)
-    private Integer id;
-
-    /**
-     * 学生姓名
-     */
-    @TableField(value = "student_name")
-    private String name;
-
-    /**
-     * 学生年龄
-     */
-    @TableField(value = "student_age")
-    private Integer age;
+    @TableId(value = "student_id", type = IdType.ASSIGN_ID)
+    private String id;
 
     /**
      * 学生班级id
      */
-    @TableField(value = "student_clazz")
+    @TableField(value = "user_id")
+    private String userId;
+
+    /**
+     * 学生班级id
+     */
+    @TableField(value = "clazz_id")
     private String clazzId;
 
     /**
      * 删除状态（0，正常，1已删除）
      */
     @TableLogic
-    @TableField(value = "del_flg")
+    @TableField(value = "del_flag")
     private Integer delFlag;
 
     /**

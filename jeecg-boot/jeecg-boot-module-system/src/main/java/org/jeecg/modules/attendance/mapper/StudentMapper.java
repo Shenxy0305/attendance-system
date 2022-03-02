@@ -1,7 +1,11 @@
 package org.jeecg.modules.attendance.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.jeecg.modules.attendance.DTO.StudentDTO;
 import org.jeecg.modules.attendance.entity.Student;
+
+import java.util.List;
 
 /**
  * @Description: 学生管理
@@ -11,4 +15,5 @@ import org.jeecg.modules.attendance.entity.Student;
  */
 public interface StudentMapper extends BaseMapper<Student> {
 
+    List<StudentDTO> getStudentList(StudentDTO studentDTO);
 }

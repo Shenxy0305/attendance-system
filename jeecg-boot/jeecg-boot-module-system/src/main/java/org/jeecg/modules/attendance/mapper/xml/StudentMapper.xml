@@ -2,4 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.jeecg.modules.attendance.mapper.StudentMapper">
 
+    <resultMap id="getStudentDAO" type="org.jeecg.modules.attendance.DTO.StudentDTO">
+        <result property="userId" column="user_id"/>
+        <result property="account" column="username"/>
+        <result property="name" column="realname"/>
+        <result property="sex" column="sex"/>
+        <result property="majorId" column="major_id"/>
+        <result property="majorName" column="major_name"/>
+        <result property="clazzId" column="clazz_id"/>
+        <result property="clazzName" column="clazz_name"/>
+        <result property="phone" column="phone"/>
+    </resultMap>
+    
+    <select id="getStudentList" parameterType="org.jeecg.modules.attendance.DTO.StudentDTO" resultMap="getStudentDAO">
+        SELECT
+        u.realname,
+        u.phone,
+        u.username,
+        s.user_id,
+        m.major_name,
+        c.clazz_name
+        FROM
+        sys_user u
+        INNER JOIN at_student s ON s.user_id = u.id
+        INNER JOIN at_clazz c ON s.clazz_id = c.clazz_id
+        INNER JOIN at_major m ON c.major_id = m.major_id
+        WHERE
+        u.del_flag = 0
+        AND s.del_flag = 0
+        AND c.del_flag = 0
+        AND m.del_flag = 0
+        <if test="account != null and account != ''">
+            AND u.username LIKE CONCAT(#{account},'%')
+        </if>
+        <if test="name != null and name != ''">
+            AND u.realname LIKE CONCAT(#{name},'%')
+        </if>
+        <if test="sex != null and sex != ''">
+            AND u.sex = #{sex}
+        </if>
+        <if test="majorId != null and majorId != ''">
+            AND m.major_id = #{majorId}
+        </if>
+        <if test="clazzId != null and clazzId != ''">
+            AND s.clazz_id = #{clazzId}
+        </if>
+        <if test="phone != null and phone != ''">
+            AND u.phone LIKE CONCAT(#{phone},'%')
+        </if>
+    </select>
 </mapper>

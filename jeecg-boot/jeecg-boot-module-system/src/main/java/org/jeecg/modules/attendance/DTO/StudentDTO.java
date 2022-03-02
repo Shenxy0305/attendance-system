@@ -1,17 +1,23 @@
-package org.jeecg.modules.attendance.Dao;
+package org.jeecg.modules.attendance.DTO;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.jeecg.modules.system.entity.SysUser;
 
 import java.io.Serializable;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class StudentDAO implements Serializable {
+public class StudentDTO extends SysUser implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 用户id
+     */
+    private String userId;
 
     /**
      * 学号
